@@ -22,18 +22,17 @@ const bitcoinIntegration = async () => {
       .setColor(255, 0, 0)
       .setMode(LUXAFOR_MODE_STROBE)
       .setSpeed(10)
-      .setRepeat(10)
+      .setRepeat(5)
       .execute()
   } else if (currentBitcoinUSDExchangeRate < res.USD.last) {
     luxafor
       .setColor(0, 255, 0)
       .setMode(LUXAFOR_MODE_STROBE)
       .setSpeed(10)
-      .setRepeat(10)
+      .setRepeat(5)
       .execute()
   }
 
-  console.log(currentBitcoinUSDExchangeRate, res.USD.last)
   currentBitcoinUSDExchangeRate = res.USD.last
 }
 
