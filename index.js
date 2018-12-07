@@ -1,10 +1,21 @@
 import fetch from 'node-fetch'
-import { Luxafor, LUXAFOR_MODE_STROBE } from '@nerdenough/luxafor'
+import * as luxafor from '@nerdenough/luxafor'
+import { setInterval, setTimeout } from 'timers'
 
-const luxafor = new Luxafor()
-luxafor.setColor(0, 255, 255).execute()
-
-let currentBitcoinUSDExchangeRate = 0
+const reset = () => {
+  luxafor.color({
+    led: luxafor.LUXAFOR_LED_FRONT,
+    blue: 255,
+    green: 255,
+    speed: 10
+  })
+  luxafor.color({
+    led: luxafor.LUXAFOR_LED_BACK,
+    red: 255,
+    green: 255,
+    speed: 10
+  })
+}
 
 const bitcoinRequest = () => {
   return fetch('https://blockchain.info/ticker')
@@ -12,33 +23,23 @@ const bitcoinRequest = () => {
     .catch(err => null)
 }
 
-const bitcoinIntegration = async () => {
+let previousBitcoinUSD = 0
+const bitcoin = async () => {
   const res = await bitcoinRequest()
-  if (!res) {
-    // TODO: handle error
-    return
-  }
+  const latestBitcoinUSD = res.USD.last
 
-  if (currentBitcoinUSDExchangeRate) {
-    if (currentBitcoinUSDExchangeRate > res.USD.last) {
-      luxafor
-        .setColor(255, 0, 0)
-        .setMode(LUXAFOR_MODE_STROBE)
-        .setSpeed(10)
-        .setRepeat(5)
-        .execute()
-    } else if (currentBitcoinUSDExchangeRate < res.USD.last) {
-      luxafor
-        .setColor(0, 255, 0)
-        .setMode(LUXAFOR_MODE_STROBE)
-        .setSpeed(10)
-        .setRepeat(5)
-        .execute()
+  if (previousBitcoinUSD) {
+    if (previousBitcoinUSD > latestBitcoinUSD) {
+      luxafor.strobe({ led: luxafor.LUXAFOR_LED_4, red: 255, green: 255 })
+    } else if (previousBitcoinUSD < latestBitcoinUSD) {
+      luxafor.strobe({ led: luxafor.LUXAFOR_LED_6, red: 255, green: 255 })
     }
   }
 
-  currentBitcoinUSDExchangeRate = res.USD.last
+  previousBitcoinUSD = latestBitcoinUSD
+  setTimeout(reset, 3000)
 }
 
-setInterval(bitcoinIntegration, 60000)
-bitcoinIntegration()
+reset()
+setInterval(bitcoin, 60000)
+bitcoin()

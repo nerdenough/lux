@@ -632,10 +632,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@nerdenough/luxafor@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@nerdenough/luxafor/-/luxafor-0.1.3.tgz#3d9833bd7d87927e1fcbe5fad02378d323667d8e"
-  integrity sha512-0/QDha/QmoOhCYK+vu+s/HiTJKjY93S7F9Qj5xdBmsEZLgPjD0urfXKZnTNFo8l9FMYC0C9DJybLfsJ9h8v3yg==
+"@nerdenough/luxafor@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@nerdenough/luxafor/-/luxafor-1.1.1.tgz#79d93dc4fc04d31f1f81e0c91a78fa53fe5a3559"
+  integrity sha512-wKivSSSgDY7qqSbRD8PV7RGjEhlihg6WR/4g/dT/A2lvtK4L/40yBFp/7CnE9jny0b18Dm8clPasOEqg1IGHmQ==
   dependencies:
     node-hid "^0.7.4"
 
