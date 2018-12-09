@@ -1,3 +1,4 @@
 import { bitcoin } from './bitcoin'
+import { githubNotifications } from './github'
 
-export { bitcoin }
+export { bitcoin, githubNotifications }
